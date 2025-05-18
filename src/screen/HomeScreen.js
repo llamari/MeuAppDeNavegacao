@@ -1,33 +1,51 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 
 const windowWidth = Dimensions.get('window').width;
 
-export default function HomeScreen({navigation}) {
-    return(
+export default function HomeScreen({ navigation }) {
+    return (
         <View style={styles.container}>
-            <Text>Home Screen</Text>
-            <View style={styles.buttonContainer}>
-                <Button title="Go to Details" onPress={() => navigation.navigate('Details')} />
-            </View>
-            <View style={styles.buttonContainer}>
-                <Button title="Go to Profile" onPress={() => navigation.navigate('Profile')} />
-            </View>
+            <Text style={styles.title}>🌷 Home Screen 🌷</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Details')} style={styles.button}>
+                <Text style={styles.buttonText}>Go to Details</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.button}>
+                <Text style={styles.buttonText}>Go to Profile</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: "700",
+        color: "#cf237c",
+        marginBottom: 20,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f8ff',
+        backgroundColor: '#ffebf5',
     },
-    buttonContainer: {
-        backgroundColor: '#add8e6',
-        margin: 10,
-        width: windowWidth*0.5,
-        borderRadius: 5,
-    }
+    button: {
+        backgroundColor: "#f57dbb",
+        height: 40,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "90%",
+        marginTop: 15,
+        marginHorizontal: 25,
+        fontWeight: "600",
+        color: "#fff",
+    },
+    buttonText: {
+        fontWeight: "600",
+        color: "#fff",
+        fontSize: 24
+    },
 })

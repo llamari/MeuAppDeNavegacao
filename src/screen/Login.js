@@ -18,6 +18,8 @@ function Login({ navigation }) {
             setPassword(true);
         } else {
             setPassword(false)
+            await AsyncStorage.setItem('LoggedIn', 'true');
+            console.log(await AsyncStorage.getItem('LoggedIn'))
             navigation.navigate('Home')
         }
     }

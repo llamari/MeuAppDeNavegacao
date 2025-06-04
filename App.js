@@ -11,27 +11,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
-export default function App(){
-  const [loggedIn, setLoggedIn] = useState();
+export default function App() {
+  const [initialRoute, setInitialRoute] = useState('');
 
   useEffect(() => {
-    async function LoggedIn() {
-      const logged = await AsyncStorage.getItem('LoggedIn');
-      setLoggedIn(logged);
-      console.log(loggedIn)
-    }
+    const LoggedIn = async () => {
+      try {
+        const logged = await AsyncStorage.getItem('LoggedIn');
+        console.log("Dentro de UseEffect Home!")
+        console.log("logged = ", logged)
+        if (logged == 'true') {
+          setInitialRoute('Home')
+        } else {
+          setInitialRoute('Login')
+        }
+      } catch (error) {
+        console.error('Erro ao obter dados do Async Storage:', error);
+      }
+    };
 
     LoggedIn()
   }, [])
 
-  return(
+  return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={loggedIn=="true" ? "Home": 'Login'}>
-        <Stack.Screen name='SignUp' component={SignUp} options={{headerShown: false}}/>
-        <Stack.Screen name='Login' component={Login} options={{headerShown: false}}/>
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name='Details' component={DetailsScreen} options={{headerShown: false}}/>
-        <Stack.Screen name='Profile' component={ProfileScreen} options={{headerShown: false}}/>
+      <Stack.Navigator initialRouteName={initialRoute}>
+        <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Details' component={DetailsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Profile' component={ProfileScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function HomeScreen({ navigation }) {
+    const [loggedIn, setLoggedIn] = useState('');
+
+    useEffect(() => {
+        const LoggedIn = async () => {
+            try {
+              const logged = await AsyncStorage.getItem('LoggedIn');
+              console.log("Dentro de UseEffect Home!")
+              console.log("logged = ", logged)
+              setLoggedIn(logged);
+              console.log("loggedIn (useState) = ", loggedIn)
+            } catch (error) {
+              console.error('Erro ao obter dados do Async Storage:', error);
+            }
+          };
+    
+        LoggedIn()
+      }, [])
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>🌷 Home Screen 🌷</Text>
+            {
+                loggedIn ? <Text> Logado!!</Text> : <Text> Não logado...</Text>
+            }
             <TouchableOpacity onPress={() => navigation.navigate('Details')} style={styles.button}>
                 <Text style={styles.buttonText}>Go to Details</Text>
             </TouchableOpacity>

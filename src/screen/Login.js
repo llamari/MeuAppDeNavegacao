@@ -11,6 +11,7 @@ function Login({ navigation }) {
         const rightUser = await AsyncStorage.getItem('user')
         const rightPassword = await AsyncStorage.getItem('senha')
 
+        console.log("Dentro da função SignIn!!")
         console.log(rightUser);
         console.log(rightPassword)
 

@@ -21,7 +21,7 @@ function Login({ navigation }) {
             setPassword(false)
             await AsyncStorage.setItem('LoggedIn', 'true');
             console.log(await AsyncStorage.getItem('LoggedIn'))
-            navigation.navigate('Home')
+            navigation.replace('Home')
         }
     }
 

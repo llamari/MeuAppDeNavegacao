@@ -1,11 +1,19 @@
 import React from "react";
 import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
-
-const windowWidth = Dimensions.get('window').width;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function ProfileScreen({ navigation }) {
+    const LogOut = async () => {
+        await AsyncStorage.removeItem('LoggedIn');
+        navigation.replace('Login');
+    }
+
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <Feather name="user" size={30} color="#cf237c" />
+            </View>
             <Text style={styles.title}>🌷 ProfileScreen 🌷</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
                 <Text style={styles.buttonText}>Go to Home</Text>
@@ -16,11 +24,18 @@ export default function ProfileScreen({ navigation }) {
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.button}>
                 <Text style={styles.buttonText}>Go Back</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={LogOut} style={styles.logoutbutton}>
+                <Text style={styles.buttonText}>LogOut</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    header: {
+        position: 'absolute',
+        top: '50'
+    },
     title: {
         fontSize: 24,
         fontWeight: "700",
@@ -49,5 +64,19 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         color: "#fff",
         fontSize: 24
+    },
+    logoutbutton: {
+        backgroundColor: '#e70000',
+        height: 40,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "90%",
+        marginTop: 15,
+        marginHorizontal: 25,
+        fontWeight: "600",
+        color: "#fff",
+        position: 'absolute',
+        bottom: '70',
     },
 })
